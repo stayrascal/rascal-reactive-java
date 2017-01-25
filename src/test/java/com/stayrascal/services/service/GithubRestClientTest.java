@@ -32,7 +32,7 @@ public class GithubRestClientTest {
                 .thenReturn(new RawUser("foo", "foo bar", "http://foo.bar"));
         when(restTemplate.getForObject(baseUrl + "/followers", RawUser[].class))
                 .thenReturn(new RawUser[]{new RawUser("bar", "???", "???")});
-        when(restTemplate.getForObject(baseUrl + "repos", GithubRepository[].class))
+        when(restTemplate.getForObject(baseUrl + "/repos", GithubRepository[].class))
                 .thenReturn(new GithubRepository[]{new GithubRepository("foo repo", "http://foo.bar/repo")});
     }
 
@@ -52,6 +52,15 @@ public class GithubRestClientTest {
         assertThat(followers).isNotEmpty();
 
         verify(restTemplate).getForObject(baseUrl + "/followers", RawUser[].class);
+    }
+
+    @Test
+    public void testGetRepositories() throws Exception {
+        GithubRepository[] repos = restClient.getRepositories("foo");
+
+        assertThat(repos).isNotEmpty();
+
+        verify(restTemplate).getForObject(baseUrl + "/repos", GithubRepository[].class);
 
     }
 }
