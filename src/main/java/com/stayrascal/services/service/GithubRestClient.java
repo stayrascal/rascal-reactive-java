@@ -13,7 +13,7 @@ import static java.lang.String.format;
 @Component
 public class GithubRestClient {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    public static final String API_GITHUB_USERS = "https://api.github/users/%s";
+    public static final String API_GITHUB_USERS = "https://api.github.com/users/%s";
     private static final String API_GITHUB_FOLLOWERS = API_GITHUB_USERS + "/followers";
     private static final String API_GITHUB_REPOS = API_GITHUB_USERS + "/repos";
 
