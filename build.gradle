@@ -1,6 +1,21 @@
+ext {
+        projectName = rootProject.name
+        projectVersion = project.version
+        buildNumber = System.getenv("BUILD_NUMBER") ?: "lcoal"
+        jobName = System.getenv("JOB_NAME") ?: name
+        buildUrl = System.getenv("BUILD_URL") ?: "http://local-build"
+        revision = System.getenv("GIT_COMMIT") ?: "local"
+        timestamp = new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        buildDir = relativePath("./build")
+}
+
+project.group='com.stayrascal.aws'
+project.version= buildNumber
+
 buildscript {
     repositories {
         jcenter()
+        mavenLocal()
         maven { url 'http://repo.spring.io/snapshot' }
         maven { url 'http://repo.spring.io/milestone' }
     }
@@ -12,11 +27,6 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
-
-jar {
-    baseName = 'practice'
-    version =  '0.0.1-SNAPSHOT'
-}
 
 repositories {
     jcenter()
