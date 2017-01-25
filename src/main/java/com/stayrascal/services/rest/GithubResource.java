@@ -20,7 +20,7 @@ public class GithubResource {
 
     @RequestMapping("/{username}")
     public GithubUser getUser(@PathVariable("username") String username) {
-        logger.info("Get git.com/{} info", login);
+        logger.info("Get git.com/{} info", username);
         return githubService.getUser(username);
     }
 }

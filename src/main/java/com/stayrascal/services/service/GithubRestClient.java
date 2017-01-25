@@ -4,25 +4,21 @@ import com.stayrascal.services.model.GithubRepository;
 import com.stayrascal.services.model.RawUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import static java.lang.String.format;
 
+@Component
 public class GithubRestClient {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    public static final String API_GITHUB_USERS = "https://api.github/users/%s";
-    public static final String API_GITHUB_FOLLOWERS = API_GITHUB_USERS + "/followers";
-    public static final String API_GITHUB_REPOS = API_GITHUB_USERS + "/repos";
+    private static final String API_GITHUB_USERS = "https://api.github/users/%s";
+    private static final String API_GITHUB_FOLLOWERS = API_GITHUB_USERS + "/followers";
+    private static final String API_GITHUB_REPOS = API_GITHUB_USERS + "/repos";
 
-    private final RestTemplate restTemplate;
-
-    public GithubRestClient(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
-    public GithubRestClient() {
-        this(new RestTemplate());
-    }
+    @Autowired
+    private RestTemplate restTemplate;
 
     public RawUser getUser(String username) {
         logger.info("Get user {}", username);
