@@ -2,17 +2,17 @@ package com.stayrascal.services.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Repository {
+public class GithubRepository {
 
     private String name;
 
     @JsonProperty("html_url")
     private String url;
 
-    public Repository() {
+    public GithubRepository() {
     }
 
-    public Repository(String name, String url) {
+    public GithubRepository(String name, String url) {
         this.name = name;
         this.url = url;
     }

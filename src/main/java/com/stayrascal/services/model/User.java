@@ -8,9 +8,9 @@ public class User {
 
     private List<RawUser> followers;
 
-    private List<Repository> repositories;
+    private List<GithubRepository> repositories;
 
-    public User(RawUser user, List<RawUser> followers, List<Repository> repositories) {
+    public User(RawUser user, List<RawUser> followers, List<GithubRepository> repositories) {
         this.user = user;
         this.followers = followers;
         this.repositories = repositories;
@@ -24,7 +24,7 @@ public class User {
         return followers;
     }
 
-    public List<Repository> getRepositories() {
+    public List<GithubRepository> getRepositories() {
         return repositories;
     }
 }
