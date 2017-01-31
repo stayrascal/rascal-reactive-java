@@ -1,4 +1,4 @@
-package com.stayrascal.services.util.rest.dto.jsonapi;
+package com.stayrascal.services.util.rest.dto.jsonapi.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
