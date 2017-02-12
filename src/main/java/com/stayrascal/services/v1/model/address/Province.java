@@ -1,5 +1,6 @@
 package com.stayrascal.services.v1.model.address;
 
+import com.stayrascal.services.v1.model.audit.Auditable;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "RASCAL_PROVINCE", indexes = @Index(columnList = "PROBINCE_ID"))
-public class Province {
+public class Province extends Auditable {
 
     @Id
     @GeneratedValue(generator = "generator", strategy = GenerationType.SEQUENCE)

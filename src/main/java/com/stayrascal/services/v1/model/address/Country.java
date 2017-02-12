@@ -1,5 +1,7 @@
 package com.stayrascal.services.v1.model.address;
 
+import com.stayrascal.services.v1.model.audit.Auditable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "RASCAL_COUNTRY", indexes = @Index(columnList = "COUNTRY_ID"))
-public class Country {
+public class Country extends Auditable {
 
     @Id
     @GeneratedValue(generator = "generator", strategy = GenerationType.SEQUENCE)
