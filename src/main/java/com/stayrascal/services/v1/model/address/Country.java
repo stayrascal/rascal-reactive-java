@@ -5,11 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Index;
 import javax.persistence.SequenceGenerator;
-import java.util.Set;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "RASCAL_COUNTRY", indexes = @Index(columnList = "COUNTRY_ID"))
 public class Country {
 
     @Id
@@ -21,6 +22,11 @@ public class Country {
     @Column(name = "COUNTRY_NAME", length = 10)
     private String countryName;
 
-    @OneToMany
-    private Set<Province> provinces;
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
 }
