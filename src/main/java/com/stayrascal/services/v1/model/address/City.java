@@ -21,7 +21,7 @@ public class City extends Auditable {
     @Id
     @GeneratedValue(generator = "generator", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "generator", sequenceName = "SEQ_RASCAL_CITY", allocationSize = 1)
-    @Column(name = "CITY_ID")
+    @Column(name = "CITY_ID", nullable = false)
     private Long cityId;
 
     @Column(name = "CITY_NAME", nullable = false, length = 10)

@@ -1,6 +1,7 @@
 package com.stayrascal.services.v1.model;
 
 
+import com.stayrascal.services.v1.model.audit.Auditable;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -17,18 +18,18 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "RASCAL_CUSTOMER", indexes = @Index(columnList = "CUSTOMER_ID"))
-public class Customer {
+public class Customer extends Auditable{
 
     @Id
     @GeneratedValue(generator = "generator", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "generator", sequenceName = "SEQ_RASCAL_CUSTOMER")
-    @Column(name = "CUSTOMER_ID")
+    @Column(name = "CUSTOMER_ID", nullable = false)
     private Long customerId;
 
-    @Column(name = "CUSTOMER_NAME", length = 10)
+    @Column(name = "CUSTOMER_NAME", nullable = false, length = 10)
     private String customerName;
 
-    @Column(name = "GENER", nullable = false, length = 10)
+    @Column(name = "GENDER", nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     private Gender gender = Gender.OTHER;
 
@@ -36,11 +37,11 @@ public class Customer {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate birthDate;
 
-    @Column(name = "PHONE_NUMBER")
+    @Column(name = "PHONE_NUMBER", nullable = false, length = 11)
     private Long phoneNumber;
 
     @Type(type = "yes_no")
-    @Column(name = "status", nullable = false, length = 1)
+    @Column(name = "STATUS", nullable = false, length = 1)
     private boolean status;
 
     public String getCustomerName() {

@@ -1,5 +1,6 @@
 package com.stayrascal.services.v1.model.address;
 
+import com.stayrascal.services.v1.model.Company;
 import com.stayrascal.services.v1.model.Customer;
 import org.hibernate.annotations.Type;
 
@@ -21,26 +22,30 @@ public class Address {
     @Id
     @GeneratedValue(generator = "generator", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "generator", sequenceName = "SEQ_RASCAL_ADDRESS", allocationSize = 1)
-    @Column(name = "ADDRESS_ID")
+    @Column(name = "ADDRESS_ID", nullable = false)
     private Long addressId;
 
     @ManyToOne
-    @JoinColumn(name = "COUNTRY_ID")
+    @JoinColumn(name = "COUNTRY_ID", nullable = false)
     private Country country;
 
     @ManyToOne
-    @JoinColumn(name = "PROVINCE_IS")
+    @JoinColumn(name = "PROVINCE_IS", nullable = false)
     private Province province;
 
     @ManyToOne
-    @Column(name = "CITY_ID")
+    @Column(name = "CITY_ID", nullable = false)
     private City city;
 
     @ManyToOne
     @Column(name = "CUSTOMER_ID")
     private Customer customer;
 
-    @Column(name = "DETAIL", length = 255)
+    @ManyToOne
+    @Column(name = "COMPANY_ID")
+    private Company company;
+
+    @Column(name = "DETAIL")
     private String detail;
 
     @Column(name = "POSTCODE", length = 10)
@@ -104,5 +109,13 @@ public class Address {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

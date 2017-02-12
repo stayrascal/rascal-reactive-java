@@ -21,10 +21,10 @@ public class Province extends Auditable {
     @Id
     @GeneratedValue(generator = "generator", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "generator", sequenceName = "SEQ_RASCAL_PROVINCE")
-    @Column(name = "PROVINCE_ID")
+    @Column(name = "PROVINCE_ID", nullable = false)
     private Long provinceId;
 
-    @Column(name = "PROVINCE_NAME", length = 10)
+    @Column(name = "PROVINCE_NAME", nullable = false, length = 10)
     private String provinceName;
 
     @ManyToOne
