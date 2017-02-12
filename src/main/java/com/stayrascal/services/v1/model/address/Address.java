@@ -1,21 +1,108 @@
 package com.stayrascal.services.v1.model.address;
 
+import com.stayrascal.services.v1.model.Customer;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "RASCAL_ADDRESS", indexes = @Index(columnList = "ADDRESS_ID"))
 public class Address {
 
+    @Id
+    @GeneratedValue(generator = "generator", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "generator", sequenceName = "SEQ_RASCAL_ADDRESS", allocationSize = 1)
+    @Column(name = "ADDRESS_ID")
     private Long addressId;
 
-    private Long countryId;
+    @ManyToOne
+    @JoinColumn(name = "COUNTRY_ID")
+    private Country country;
 
-    private Long provinceId;
+    @ManyToOne
+    @JoinColumn(name = "PROVINCE_IS")
+    private Province province;
 
-    private Long cityId;
+    @ManyToOne
+    @Column(name = "CITY_ID")
+    private City city;
 
-    private String details;
+    @ManyToOne
+    @Column(name = "CUSTOMER_ID")
+    private Customer customer;
 
-    private Integer postcode;
+    @Column(name = "DETAIL", length = 255)
+    private String detail;
 
+    @Column(name = "POSTCODE", length = 10)
+    private String postcode;
+
+    @Type(type = "yes_no")
+    @Column(name = "STATUS", nullable = false, length = 1)
     private boolean status;
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 }
