@@ -15,7 +15,7 @@ public class Country {
 
     @Id
     @GeneratedValue(generator = "generator", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "generator", sequenceName = "SEQ_COUNTRY")
+    @SequenceGenerator(name = "generator", sequenceName = "SEQ_RASCAL_COUNTRY")
     @Column(name = "COUNTRY_ID")
     private Long countryId;
 
