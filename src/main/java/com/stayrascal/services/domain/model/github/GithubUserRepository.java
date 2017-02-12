@@ -1,18 +1,18 @@
-package com.stayrascal.services.model;
+package com.stayrascal.services.domain.model.github;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class GithubRepository {
+public class GithubUserRepository {
 
     private String name;
 
     @JsonProperty("html_url")
     private String url;
 
-    public GithubRepository() {
+    public GithubUserRepository() {
     }
 
-    public GithubRepository(String name, String url) {
+    public GithubUserRepository(String name, String url) {
         this.name = name;
         this.url = url;
     }

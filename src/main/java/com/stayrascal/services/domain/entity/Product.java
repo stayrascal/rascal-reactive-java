@@ -1,4 +1,4 @@
-package com.stayrascal.services.v1.domain;
+package com.stayrascal.services.domain.entity;
 
 import org.hibernate.annotations.Type;
 

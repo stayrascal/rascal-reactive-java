@@ -3,3 +3,15 @@ api:
     users: https://api.github.com/users/%s
     followers: https://api.github.com/users/%s/followers
     repos: https://api.github.com/users/%s/repos
+
+host:
+  name: localhost
+
+server:
+  port: 8081
+  comtextPath: /
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate

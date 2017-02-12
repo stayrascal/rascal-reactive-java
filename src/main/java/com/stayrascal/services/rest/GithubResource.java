@@ -1,6 +1,6 @@
 package com.stayrascal.services.rest;
 
-import com.stayrascal.services.model.GithubUser;
+import com.stayrascal.services.domain.model.github.GithubUser;
 import com.stayrascal.services.service.GithubService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

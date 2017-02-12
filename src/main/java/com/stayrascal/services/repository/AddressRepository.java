@@ -1,6 +1,6 @@
-package com.stayrascal.services.v1.repository;
+package com.stayrascal.services.repository;
 
-import com.stayrascal.services.v1.domain.address.Address;
+import com.stayrascal.services.domain.entity.address.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;

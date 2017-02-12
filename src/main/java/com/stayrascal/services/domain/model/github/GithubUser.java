@@ -1,4 +1,4 @@
-package com.stayrascal.services.model;
+package com.stayrascal.services.domain.model.github;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ public class GithubUser {
 
     private List<RawUser> followers;
 
-    private List<GithubRepository> repositories;
+    private List<GithubUserRepository> repositories;
 
-    public GithubUser(RawUser rawUser, List<RawUser> followers, List<GithubRepository> repositories) {
+    public GithubUser(RawUser rawUser, List<RawUser> followers, List<GithubUserRepository> repositories) {
         this.rawUser = rawUser;
         this.followers = followers;
         this.repositories = repositories;
@@ -24,7 +24,7 @@ public class GithubUser {
         return followers;
     }
 
-    public List<GithubRepository> getRepositories() {
+    public List<GithubUserRepository> getRepositories() {
         return repositories;
     }
 }

@@ -1,12 +1,12 @@
-package com.stayrascal.services.v1.domain.model;
+package com.stayrascal.services.domain.model;
 
 import com.google.common.collect.Lists;
-import com.stayrascal.services.model.GithubRepository;
-import com.stayrascal.services.model.GithubUser;
-import com.stayrascal.services.model.RawUser;
-import com.stayrascal.services.v1.domain.Customer;
-import com.stayrascal.services.v1.domain.Product;
-import com.stayrascal.services.v1.domain.address.Address;
+import com.stayrascal.services.domain.entity.Customer;
+import com.stayrascal.services.domain.entity.Product;
+import com.stayrascal.services.domain.entity.address.Address;
+import com.stayrascal.services.domain.model.github.GithubUser;
+import com.stayrascal.services.domain.model.github.GithubUserRepository;
+import com.stayrascal.services.domain.model.github.RawUser;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class CustomerDto {
                 .orElse(Lists.newArrayList());
     }
 
-    public List<GithubRepository> getGithRepository() {
+    public List<GithubUserRepository> getGithRepository() {
         return githubUser
                 .map(user -> user.getRepositories())
                 .orElse(Lists.newArrayList());

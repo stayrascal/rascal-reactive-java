@@ -1,7 +1,7 @@
-package com.stayrascal.services.v1.domain;
+package com.stayrascal.services.domain.entity;
 
 
-import com.stayrascal.services.v1.domain.audit.Auditable;
+import com.stayrascal.services.domain.entity.audit.Auditable;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
