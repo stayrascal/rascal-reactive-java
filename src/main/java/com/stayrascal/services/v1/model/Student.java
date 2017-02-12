@@ -21,7 +21,7 @@ public class Student {
     @Column(name = "NAME", length = 10)
     private String name;
 
-    private Gener gener;
+    private Gender gender;
 
     private Long birthDate;
 
