@@ -45,5 +45,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-configuration-processor")
     compile("org.springframework.hateoas:spring-hateos")
     compile("io.reactivex:rxjava:1.2.5")
+    compile("org.jadira.usertype:usertype.extended:5.0.0.GA")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
