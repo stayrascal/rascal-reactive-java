@@ -1,6 +1,6 @@
-package com.stayrascal.services.v1.model.address;
+package com.stayrascal.services.v1.domain.address;
 
-import com.stayrascal.services.v1.model.audit.Auditable;
+import com.stayrascal.services.v1.domain.audit.Auditable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

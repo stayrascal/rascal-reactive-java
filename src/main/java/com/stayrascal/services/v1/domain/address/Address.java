@@ -1,7 +1,7 @@
-package com.stayrascal.services.v1.model.address;
+package com.stayrascal.services.v1.domain.address;
 
-import com.stayrascal.services.v1.model.Company;
-import com.stayrascal.services.v1.model.Customer;
+import com.stayrascal.services.v1.domain.Company;
+import com.stayrascal.services.v1.domain.Customer;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;

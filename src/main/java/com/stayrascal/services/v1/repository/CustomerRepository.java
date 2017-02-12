@@ -1,6 +1,6 @@
 package com.stayrascal.services.v1.repository;
 
-import com.stayrascal.services.v1.model.Customer;
+import com.stayrascal.services.v1.domain.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;

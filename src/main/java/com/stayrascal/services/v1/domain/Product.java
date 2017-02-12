@@ -1,4 +1,4 @@
-package com.stayrascal.services.v1.model;
+package com.stayrascal.services.v1.domain;
 
 import org.hibernate.annotations.Type;
 
@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -29,6 +30,10 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "COMPANY_ID", nullable = false)
     private Company company;
+
+    @ManyToMany
+    @JoinColumn(name = "CUSTOMER_ID")
+    private Customer customer;
 
     @Type(type = "yes_no")
     @Column(name = "STATUS", nullable = false, length = 1)
@@ -56,5 +61,13 @@ public class Product {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

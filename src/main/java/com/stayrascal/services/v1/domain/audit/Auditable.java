@@ -1,4 +1,4 @@
-package com.stayrascal.services.v1.model.audit;
+package com.stayrascal.services.v1.domain.audit;
 
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedBy;
