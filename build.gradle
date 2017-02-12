@@ -49,3 +49,9 @@ dependencies {
     compile("com.google.guava:guava:21.0")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Camden.SR5'
+    }
+}

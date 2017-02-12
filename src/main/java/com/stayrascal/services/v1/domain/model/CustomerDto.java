@@ -8,6 +8,7 @@ import com.stayrascal.services.v1.domain.Customer;
 import com.stayrascal.services.v1.domain.Product;
 import com.stayrascal.services.v1.domain.address.Address;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,6 +58,10 @@ public class CustomerDto {
 
     public Optional<GithubUser> getGithubUser() {
         return githubUser;
+    }
+
+    public void setGithubUser(@NotNull Optional<GithubUser> githubUser) {
+        this.githubUser = githubUser;
     }
 
     public List<RawUser> getGithubFollowers() {
