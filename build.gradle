@@ -46,5 +46,6 @@ dependencies {
     compile("org.springframework.hateoas:spring-hateos")
     compile("io.reactivex:rxjava:1.2.5")
     compile("org.jadira.usertype:usertype.extended:5.0.0.GA")
+    compile("com.google.guava:guava:21.0")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
