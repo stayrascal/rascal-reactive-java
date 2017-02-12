@@ -14,11 +14,12 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "RASCAL_CUSTOMER", indexes = @Index(columnList = "CUSTOMER_ID"))
-public class Customer extends Auditable{
+@Table(name = "RASCAL_CUSTOMER", indexes = @Index(columnList = "CUSTOMER_ID"), uniqueConstraints = @UniqueConstraint(columnNames = {"PHONE_NUMBER"}))
+public class Customer extends Auditable {
 
     @Id
     @GeneratedValue(generator = "generator", strategy = GenerationType.SEQUENCE)
