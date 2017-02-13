@@ -1,7 +1,7 @@
-package com.stayrascal.services.service;
+package com.stayrascal.services.repository;
 
-import com.stayrascal.services.model.GithubRepository;
-import com.stayrascal.services.model.RawUser;
+import com.stayrascal.services.domain.model.github.GithubUserRepository;
+import com.stayrascal.services.domain.model.github.RawUser;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -14,15 +14,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class GithubRestClientTest {
+public class GithubRepositoryTest {
 
     @Mock
     private RestTemplate restTemplate;
 
     @InjectMocks
-    private GithubRestClient restClient;
+    private GithubRepository restClient;
 
-    private String baseUrl = format(GithubRestClient.API_GITHUB_USERS, "foo");
+    private String baseUrl = format("https://api.github.com/users/%s", "foo");
 
     @Before
     public void setUp() throws Exception {
@@ -32,8 +32,8 @@ public class GithubRestClientTest {
                 .thenReturn(new RawUser("foo", "foo bar", "http://foo.bar"));
         when(restTemplate.getForObject(baseUrl + "/followers", RawUser[].class))
                 .thenReturn(new RawUser[]{new RawUser("bar", "???", "???")});
-        when(restTemplate.getForObject(baseUrl + "/repos", GithubRepository[].class))
-                .thenReturn(new GithubRepository[]{new GithubRepository("foo repo", "http://foo.bar/repo")});
+        when(restTemplate.getForObject(baseUrl + "/repos", GithubUserRepository[].class))
+                .thenReturn(new GithubUserRepository[]{new GithubUserRepository("foo repo", "http://foo.bar/repo")});
     }
 
     @Test
@@ -56,11 +56,11 @@ public class GithubRestClientTest {
 
     @Test
     public void testGetRepositories() throws Exception {
-        GithubRepository[] repos = restClient.getRepositories("foo");
+        GithubUserRepository[] repos = restClient.getRepositories("foo");
 
         assertThat(repos).isNotEmpty();
 
-        verify(restTemplate).getForObject(baseUrl + "/repos", GithubRepository[].class);
+        verify(restTemplate).getForObject(baseUrl + "/repos", GithubUserRepository[].class);
 
     }
 }

@@ -12,10 +12,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "RASCAL_CUSTOMER", indexes = @Index(columnList = "CUSTOMER_ID"), uniqueConstraints = @UniqueConstraint(columnNames = {"PHONE_NUMBER"}))
@@ -44,6 +46,9 @@ public class Customer extends Auditable {
     @Type(type = "yes_no")
     @Column(name = "STATUS", nullable = false, length = 1)
     private boolean status;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<Order> orders;
 
     public String getCustomerName() {
         return customerName;
@@ -83,5 +88,17 @@ public class Customer extends Auditable {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
     }
 }

@@ -1,8 +1,9 @@
 package com.stayrascal.services.service;
 
-import com.stayrascal.services.model.GithubRepository;
-import com.stayrascal.services.model.GithubUser;
-import com.stayrascal.services.model.RawUser;
+import com.stayrascal.services.domain.model.github.GithubUser;
+import com.stayrascal.services.domain.model.github.GithubUserRepository;
+import com.stayrascal.services.domain.model.github.RawUser;
+import com.stayrascal.services.repository.GithubRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -17,7 +18,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class GithubServiceTest {
 
     @Mock
-    private GithubRestClient restClient;
+    private GithubRepository restClient;
 
     @InjectMocks
     private GithubService githubService;
@@ -83,14 +84,14 @@ public class GithubServiceTest {
                 new RawUser("foo", "baz", null)};
     }
 
-    public GithubRepository[] getReposWithSleepTime() {
+    public GithubUserRepository[] getReposWithSleepTime() {
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
         }
 
-        return new GithubRepository[]{
-                new GithubRepository("foo", "???"),
-                new GithubRepository("bar", "???")};
+        return new GithubUserRepository[]{
+                new GithubUserRepository("foo", "???"),
+                new GithubUserRepository("bar", "???")};
     }
 }

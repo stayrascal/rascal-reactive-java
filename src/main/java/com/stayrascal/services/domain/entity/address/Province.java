@@ -15,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "RASCAL_PROVINCE", indexes = @Index(columnList = "PROBINCE_ID"))
+@Table(name = "RASCAL_PROVINCE", indexes = @Index(columnList = "PROVINCE_ID"))
 public class Province extends Auditable {
 
     @Id
@@ -43,6 +43,7 @@ public class Province extends Auditable {
         this.provinceName = provinceName;
     }
 
+
     public Country getCountry() {
         return country;
     }
@@ -57,5 +58,9 @@ public class Province extends Auditable {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public Long getProvinceId() {
+        return provinceId;
     }
 }

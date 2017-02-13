@@ -18,5 +18,5 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
 
     List<Address> findByCustomerCustomerId(@Param("customerId") Long customerId);
 
-    List<Address> findByProductProductId(@Param("productId") Long productId);
+    List<Address> findByCompanyCompanyId(@Param("companyId") Long companyId);
 }

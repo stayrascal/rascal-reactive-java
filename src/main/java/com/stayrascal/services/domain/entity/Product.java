@@ -1,9 +1,11 @@
 package com.stayrascal.services.domain.entity;
 
+import com.stayrascal.services.domain.entity.audit.Auditable;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,14 +15,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.util.Set;
 
 @Entity
-@Table(name = "RASCAL_NAME", indexes = @Index(columnList = "PRODUCT_ID"))
-public class Product {
+@Table(name = "RASCAL_PRODUCT", indexes = @Index(columnList = "PRODUCT_ID"))
+public class Product extends Auditable {
 
     @Id
     @GeneratedValue(generator = "generator", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "generator", sequenceName = "SEQ_PRODUCT")
+    @SequenceGenerator(name = "generator", sequenceName = "SEQ_RASCAL_PRODUCT")
     @Column(name = "PRODUCT_ID", nullable = false)
     private Long productId;
 
@@ -31,9 +34,8 @@ public class Product {
     @JoinColumn(name = "COMPANY_ID", nullable = false)
     private Company company;
 
-    @ManyToMany
-    @JoinColumn(name = "CUSTOMER_ID")
-    private Customer customer;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
+    private Set<Order> orders;
 
     @Type(type = "yes_no")
     @Column(name = "STATUS", nullable = false, length = 1)
@@ -63,11 +65,11 @@ public class Product {
         this.status = status;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Set<Order> getOrders() {
+        return orders;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 }

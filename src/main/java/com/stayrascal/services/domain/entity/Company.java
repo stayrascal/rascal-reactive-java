@@ -55,4 +55,8 @@ public class Company extends Auditable {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    public Long getCompanyId() {
+        return companyId;
+    }
 }

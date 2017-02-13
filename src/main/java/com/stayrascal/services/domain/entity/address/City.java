@@ -43,6 +43,7 @@ public class City extends Auditable {
         this.cityName = cityName;
     }
 
+
     public Province getProvince() {
         return province;
     }
@@ -57,5 +58,9 @@ public class City extends Auditable {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public Long getCityId() {
+        return cityId;
     }
 }

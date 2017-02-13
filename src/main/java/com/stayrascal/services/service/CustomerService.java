@@ -43,7 +43,9 @@ public class CustomerService {
         return Observable.create(subscriber -> {
             Customer customer = customerRepository.findOne(customerId);
             List<Address> addresses = addressRepository.findByCustomerCustomerId(customerId);
-            List<Product> products = productRepository.findByCustomerCustomerId(customerId);
+            List<Product> products = (List<Product>) Observable.from(customer.getOrders())
+                    .map(order -> order.getProducts())
+                    .toList();
             subscriber.onNext(buildCustomerDto(customer, addresses, products));
             subscriber.onCompleted();
         });

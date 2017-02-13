@@ -31,4 +31,8 @@ public class Country extends Auditable {
     public void setCountryName(String countryName) {
         this.countryName = countryName;
     }
+
+    public Long getCountryId() {
+        return countryId;
+    }
 }

@@ -30,22 +30,22 @@ public class Address {
     private Country country;
 
     @ManyToOne
-    @JoinColumn(name = "PROVINCE_IS", nullable = false)
+    @JoinColumn(name = "PROVINCE_ID", nullable = false)
     private Province province;
 
     @ManyToOne
-    @Column(name = "CITY_ID", nullable = false)
-    private City city;
-
-    @ManyToOne
-    @Column(name = "CUSTOMER_ID")
+    @JoinColumn(name = "CUSTOMER_ID")
     private Customer customer;
 
     @ManyToOne
-    @Column(name = "COMPANY_ID")
+    @JoinColumn(name = "CITY_ID", nullable = false)
+    private City city;
+
+    @ManyToOne
+    @JoinColumn(name = "COMPANY_ID")
     private Company company;
 
-    @Column(name = "DETAIL")
+    @Column(name = "DETAIL", nullable = false)
     private String detail;
 
     @Column(name = "POSTCODE", length = 10)
@@ -117,5 +117,9 @@ public class Address {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public Long getAddressId() {
+        return addressId;
     }
 }
