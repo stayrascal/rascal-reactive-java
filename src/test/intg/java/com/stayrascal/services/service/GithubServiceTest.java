@@ -1,22 +1,7 @@
 package com.stayrascal.services.service;
 
-import com.stayrascal.services.domain.model.github.GithubUser;
-import com.stayrascal.services.domain.model.github.GithubUserRepository;
-import com.stayrascal.services.domain.model.github.RawUser;
-import com.stayrascal.services.repository.GithubRepository;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.util.StopWatch;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
-
 public class GithubServiceTest {
-
+/*
     @Mock
     private GithubRepository restClient;
 
@@ -93,5 +78,5 @@ public class GithubServiceTest {
         return new GithubUserRepository[]{
                 new GithubUserRepository("foo", "???"),
                 new GithubUserRepository("bar", "???")};
-    }
+    }*/
 }
