@@ -1,6 +1,5 @@
 package com.stayrascal.services.repository;
 
-import com.stayrascal.services.ReactiveApplicationTest;
 import com.stayrascal.services.domain.model.github.GithubUserRepository;
 import com.stayrascal.services.domain.model.github.RawUser;
 import org.junit.Before;
@@ -15,8 +14,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-//@WebIntegrationTest("server.port:0")
-public class GithubRepositoryTest extends ReactiveApplicationTest {
+public class GithubRepositoryTest {
 
     @Mock
     private RestTemplate restTemplate;
