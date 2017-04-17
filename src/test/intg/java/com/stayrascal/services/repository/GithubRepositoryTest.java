@@ -15,6 +15,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+//@WebIntegrationTest("server.port:0")
 public class GithubRepositoryTest extends ReactiveApplicationTest {
 
     @Mock
