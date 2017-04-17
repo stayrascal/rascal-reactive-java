@@ -2,16 +2,21 @@ package com.stayrascal.services;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-// default value is "file:src/main/webapp", @WebAppConfiguration("classpath:test-web-resources")
-// must be used in conjunction with @ContextConfiguration
-@WebAppConfiguration
-@ContextConfiguration(locations = {}, classes = {}, inheritInitializers = true) // load the context
+@ContextConfiguration(classes = {IntegrationTestConfiguration.class})
+@SpringBootTest(webEnvironment = DEFINED_PORT)
+@ActiveProfiles("local")
 public class ReactiveApplicationTest {
+
+    protected MockMvc mockMvc;
 
     @Test
     public void contextLoads() {

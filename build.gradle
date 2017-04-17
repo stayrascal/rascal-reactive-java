@@ -52,22 +52,17 @@ repositories {
 }
 
 sourceSets {
+    main {
+        java.srcDirs = ['src/main/java']
+        resources.srcDirs = ['src/main/resources']
+    }
     test {
-        java {
-            srcDir 'src/test/unit/java'
-        }
-        resources {
-            srcDir 'src/test/unit/resources'
-        }
+        java.srcDirs = ['src/test/unit/java']
+        resources.srcDirs = ['src/test/unit/resources']
     }
     integrationTest {
-        java {
-            srcDir 'src/test/intg/java'
-        }
-        resources {
-            srcDir 'src/test/intg/resources'
-            srcDir 'config/application/environment/local'
-        }
+        java.srcDirs = ['src/test/intg/java']
+        resources.srcDirs = ['src/test/intg/resources', 'config/application/environment/local']
         compileClasspath += main.output + test.output
         runtimeClasspath += main.output + test.output
     }
@@ -75,7 +70,7 @@ sourceSets {
 
 jacoco {
     toolVersion = "0.7.6.201602180812"
-    reportsDir = file("$buildDir/reports/jacoco") // default value
+    reportsDir = file("$buildDir/reports/jacoco")
 }
 
 jacocoTestReport {
@@ -85,14 +80,11 @@ jacocoTestReport {
     }
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
-            logger.lifecycle("=============" + it + "===========")
             fileTree(dir: it,
                     include: ['com.stayrascal.services.domain.model.github/*'])
         })
     }
 }
-
-
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
@@ -100,8 +92,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-aop")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-actuator")
-    compile("org.springframework.security:spring-security-ladp")
-    /*compile("org.springframework.cloud:spring-cloud-starter-hystrix")*/
+    /*compile("org.springframework.security:spring-security-ladp")*/
+    compile("org.springframework.cloud:spring-cloud-starter-hystrix")
     compile("org.springframework.boot:spring-boot-configuration-processor")
     /*compile("org.springframework.hateoas:spring-hateos")*/
     compile("io.reactivex:rxjava:1.2.5")
@@ -118,12 +110,26 @@ dependencyManagement {
     }
 }
 
-idea.project {
-    ipr {
-        withXml { XmlProvider xml ->
-            xml.node.with {
-                component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
+idea {
+    project {
+        ipr {
+            withXml { XmlProvider xml ->
+                xml.node.with {
+                    component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
+                }
             }
         }
     }
+
+    module {
+        testSourceDirs += sourceSets.integrationTest.java.srcDirs
+    }
 }
+
+task unitTest(dependsOn: test)
+
+task integrationTest(type: Test) {
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+}
+build.dependsOn integrationTest
