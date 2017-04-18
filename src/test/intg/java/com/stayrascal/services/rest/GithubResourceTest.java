@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class GithubResourceTest extends ReactiveApplicationTest {
+    private final static String contextPath = "localhost:8081";
 
     @Autowired
     private GithubResource resource;
@@ -24,7 +25,7 @@ public class GithubResourceTest extends ReactiveApplicationTest {
 
     @Test
     public void shouldReturnGithubUserWhenGivenUsername() throws Exception {
-        mockMvc.perform(get(format("/github/users", "stayrascal")))
+        mockMvc.perform(get(format(contextPath + "/github/users", "stayrascal")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].rawUser.name").value("stayrascal"))

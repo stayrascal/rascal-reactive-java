@@ -1,7 +1,9 @@
-package com.stayrascal.services.repository;
+package com.stayrascal.services.respository;
 
+import com.stayrascal.services.ReactiveApplicationTest;
 import com.stayrascal.services.domain.model.github.GithubUserRepository;
 import com.stayrascal.services.domain.model.github.RawUser;
+import com.stayrascal.services.repository.GithubRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -10,11 +12,12 @@ import org.springframework.web.client.RestTemplate;
 
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class GithubRepositoryTest {
+public class GithubRepositoryTest extends ReactiveApplicationTest {
 
     @Mock
     private RestTemplate restTemplate;
@@ -27,12 +30,11 @@ public class GithubRepositoryTest {
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-
-        when(restTemplate.getForObject(baseUrl, RawUser.class))
+        when(restTemplate.getForObject(anyString(), RawUser.class))
                 .thenReturn(new RawUser("foo", "foo bar", "http://foo.bar"));
-        when(restTemplate.getForObject(baseUrl + "/followers", RawUser[].class))
+        when(restTemplate.getForObject(anyString(), RawUser[].class))
                 .thenReturn(new RawUser[]{new RawUser("bar", "???", "???")});
-        when(restTemplate.getForObject(baseUrl + "/repos", GithubUserRepository[].class))
+        when(restTemplate.getForObject(anyString(), GithubUserRepository[].class))
                 .thenReturn(new GithubUserRepository[]{new GithubUserRepository("foo repo", "http://foo.bar/repo")});
     }
 

@@ -9,8 +9,8 @@ import org.springframework.context.annotation.PropertySources;
 @Configuration
 @ComponentScan(basePackages = {"com.stayrascal.services"})
 @PropertySources(value = {
-        @PropertySource("classpath:applicaiton.yml"),
-        @PropertySource("classpath:test-applicaiton.yml")
+        @PropertySource("classpath:application.yml"),
+        @PropertySource("classpath:application-test.yml")
 })
 @EnableAutoConfiguration
 public class IntegrationTestConfiguration {

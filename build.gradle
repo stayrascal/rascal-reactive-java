@@ -62,9 +62,10 @@ sourceSets {
     }
     integrationTest {
         java.srcDirs = ['src/test/intg/java']
-        resources.srcDirs = ['src/test/intg/resources', 'config/application/environment/local']
+        resources.srcDirs = ['src/test/intg/resources']
+        /*resources.srcDirs = ['src/test/intg/resources', 'config/application/environment/local']
         compileClasspath += main.output + test.output
-        runtimeClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output*/
     }
 }
 
@@ -88,7 +89,7 @@ jacocoTestReport {
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-security")
+//    compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-aop")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-actuator")
@@ -97,11 +98,16 @@ dependencies {
     compile("org.springframework.boot:spring-boot-configuration-processor")
     /*compile("org.springframework.hateoas:spring-hateos")*/
     compile("io.reactivex:rxjava:1.2.5")
+//    compile("commons-logging:commons-logging:1.2")
     compile("org.jadira.usertype:usertype.extended:5.0.0.GA")
     compile("com.google.guava:guava:21.0")
     compile("joda-time:joda-time:2.9.7")
     runtime('com.h2database:h2')
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    integrationTestCompile sourceSets.main.output
+    integrationTestCompile sourceSets.test.output
+    integrationTestCompile configurations.testCompile
+    integrationTestRuntime configurations.testRuntime
 }
 
 dependencyManagement {
