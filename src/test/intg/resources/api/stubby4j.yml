@@ -1,0 +1,9 @@
+- request:
+    method: GET
+    url: ^/github/users/stayrascal
+  response:
+    status: 200
+    headers:
+      content-type: application/json
+    body: >
+      { "rawUser" : { "login" : "stayrascal" } }

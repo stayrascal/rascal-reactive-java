@@ -1,6 +1,5 @@
 package com.stayrascal.services;
 
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -15,11 +14,5 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = DEFINED_PORT)
 @ActiveProfiles("local")
 public class ReactiveApplicationTest {
-
     protected MockMvc mockMvc;
-
-    @Test
-    public void contextLoads() {
-
-    }
 }
