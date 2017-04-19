@@ -102,6 +102,7 @@ dependencies {
     compile("org.jadira.usertype:usertype.extended:5.0.0.GA")
     compile("com.google.guava:guava:21.0")
     compile("joda-time:joda-time:2.9.7")
+    compile("by.stub:stubby4j:3.3.0")
     runtime('com.h2database:h2')
     testCompile("org.springframework.boot:spring-boot-starter-test")
     integrationTestCompile sourceSets.main.output
