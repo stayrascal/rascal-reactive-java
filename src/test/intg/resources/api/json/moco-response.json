@@ -1,0 +1,16 @@
+[
+  {
+    "request": {
+      "uri": "/github/users/stayrascal"
+    },
+    "response": {
+      "json": [
+        {
+          "rawUser": {
+            "login": "stayrascal"
+          }
+        }
+      ]
+    }
+  }
+]

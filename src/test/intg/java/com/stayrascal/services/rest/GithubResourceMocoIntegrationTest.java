@@ -1,6 +1,6 @@
 package com.stayrascal.services.rest;
 
-import com.stayrascal.services.Stubby4JIntegrationTest;
+import com.stayrascal.services.MocoIntegrationTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class GithubResourceStubby4JTest extends Stubby4JIntegrationTest {
+public class GithubResourceMocoIntegrationTest extends MocoIntegrationTest {
     @Autowired
     private GithubResource resource;
 

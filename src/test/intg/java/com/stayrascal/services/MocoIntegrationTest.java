@@ -16,7 +16,7 @@ public class MocoIntegrationTest extends ReactiveApplicationTest {
     public static void startUp() throws Exception {
         HttpServer server = httpServer(8882);
         server.response(pathResource(
-                new ClassPathResource("api/jason/moco-response.json").getFile().getAbsolutePath()));
+                new ClassPathResource("api/json/moco-response.json").getFile().getAbsolutePath()));
         runner = Runner.runner(server);
         runner.start();
     }

@@ -1,6 +1,6 @@
 package com.stayrascal.services.rest;
 
-import com.stayrascal.services.ReactiveApplicationTest;
+import com.stayrascal.services.Stubby4JIntegrationTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +11,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class GithubResourceTest extends ReactiveApplicationTest {
-    private final static String contextPath = "http://localhost:8081";
-
+public class GithubResourceStubby4JIntegrationTest extends Stubby4JIntegrationTest {
     @Autowired
     private GithubResource resource;
 
@@ -24,7 +22,7 @@ public class GithubResourceTest extends ReactiveApplicationTest {
 
     @Test
     public void shouldReturnGithubUserWhenGivenUsername() throws Exception {
-        mockMvc.perform(get(format(contextPath + "/github/users/%s", "stayrascal")))
+        mockMvc.perform(get(format("/github/users/%s", "stayrascal")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.rawUser.login").value("stayrascal"));
     }
