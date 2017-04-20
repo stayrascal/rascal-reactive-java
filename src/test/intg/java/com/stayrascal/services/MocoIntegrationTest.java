@@ -9,7 +9,7 @@ import org.springframework.core.io.ClassPathResource;
 import static com.github.dreamhead.moco.Moco.httpServer;
 import static com.github.dreamhead.moco.Moco.pathResource;
 
-public class MocoIntegrationTest extends ReactiveApplicationTest {
+public abstract class MocoIntegrationTest extends ReactiveApplicationTest {
     private static Runner runner;
 
     @BeforeClass

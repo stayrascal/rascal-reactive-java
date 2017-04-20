@@ -1,6 +1,6 @@
 - request:
     method: GET
-    url: ^/github/users/stayrascal
+    url: ^/github/users/stayrascal$
   response:
     status: 200
     headers:

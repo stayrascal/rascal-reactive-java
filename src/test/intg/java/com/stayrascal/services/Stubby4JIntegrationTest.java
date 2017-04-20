@@ -5,7 +5,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.springframework.core.io.ClassPathResource;
 
-public class Stubby4JIntegrationTest extends ReactiveApplicationTest {
+public abstract class Stubby4JIntegrationTest extends ReactiveApplicationTest {
     private static final StubbyClient API_STUB = new StubbyClient();
 
     @BeforeClass

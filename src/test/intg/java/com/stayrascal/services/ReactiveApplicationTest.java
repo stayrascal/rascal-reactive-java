@@ -13,6 +13,6 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @ContextConfiguration(classes = {IntegrationTestConfiguration.class})
 @SpringBootTest(webEnvironment = DEFINED_PORT)
 @ActiveProfiles("local")
-public class ReactiveApplicationTest {
+public abstract class ReactiveApplicationTest {
     protected MockMvc mockMvc;
 }

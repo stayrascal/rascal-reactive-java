@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class GithubRepositoryTest extends ReactiveApplicationTest {
+public class GithubRepositoryIntegrationTest extends ReactiveApplicationTest {
 
     @Mock
     private RestTemplate restTemplate;
