@@ -34,6 +34,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'jacoco'
+apply plugin: 'checkstyle'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'org.sonarqube'
 
@@ -85,6 +86,12 @@ jacocoTestReport {
                     include: ['com.stayrascal.services.domain.model.github/*'])
         })
     }
+}
+
+checkstyle {
+    configProperties.projectDir = project.projectDir
+    checkstyleMain.configFile = new File(project.projectDir, '/config/checkstyle/checkstyle-main.xml')
+    checkstyleTest.configFile = new File(project.projectDir, '/config/checkstyle/checkstyle-test.xml')
 }
 
 dependencies {
