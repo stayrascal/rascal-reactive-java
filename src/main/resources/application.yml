@@ -4,7 +4,7 @@ api:
     roles: API_USER, API_SERVICE
     realm: "Stay Rascal API"
     users:
-      apiuser: $2a$04$F4GfzO1ougmqz7p30bOzReoInkvszZnTPfC3y7NHOLAYaCEGL4GwK,ROLE_API_USER,enabled
+      apiuser: $2a$10$PyhfP97kw2fLqoa6YIQ9Uue4G3f8Er950mldVJjzdMtuD9Qav6hDa,ROLE_API_USER,enabled
     role-mapping:
       EXTRNAL_AD_ROLE: ROLE_API_USER
   github:
