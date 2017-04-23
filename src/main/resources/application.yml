@@ -1,4 +1,12 @@
 api:
+  security:
+    paths: /github/**
+    roles: API_USER, API_SERVICE
+    realm: "Stay Rascal API"
+    users:
+      apiuser: $2a$04$F4GfzO1ougmqz7p30bOzReoInkvszZnTPfC3y7NHOLAYaCEGL4GwK,ROLE_API_USER,enabled
+    role-mapping:
+      EXTRNAL_AD_ROLE: ROLE_API_USER
   github:
     users: https://api.github.com/users/%s
     followers: https://api.github.com/users/%s/followers
@@ -12,7 +20,7 @@ server:
   comtextPath: /
   tomcat:
     access-log-enabled: true
-    access-log-pattern: %a %{X-Forwarded-For}i %l %u %t &quot;%r&quot; %s %b
+#    access-log-pattern: %a %{X-Forwarded-For}i %l %u %t &quot;%r&quot; %s %b
 
 spring:
   applicaiton:
