@@ -7,11 +7,15 @@ ext {
     revision = System.getenv("GIT_COMMIT") ?: "local"
     timestamp = new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
     buildDir = relativePath("./build")
-
+    buildLabel = System.getenv("CI_LABEL") ?: ("${System.getenv('USERNAME') ?: 'UNKNOWM'}-SNAPSHOT".toString())
+    buildDate = new Date().format('dd-MM-yyyy HH:mm')
+    buildVersion = System.getenv("VERSION") ?: buildLabel
+    simianThreshold = '9'
+    apiName = 'rascal-api'
 }
 
 project.group = 'com.stayrascal.aws'
-project.version = buildNumber
+project.version = buildVersion
 
 buildscript {
     ext {
@@ -23,7 +27,8 @@ buildscript {
         mavenLocal()
         maven { url 'http://repo.spring.io/snapshot' }
         maven { url 'http://repo.spring.io/milestone' }
-        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'https://plugins.gradle.org/m2/' }
+//        maven { url 'http://localhost.nexus/'}
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springbootVersion}"
@@ -37,6 +42,17 @@ apply plugin: 'jacoco'
 apply plugin: 'checkstyle'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'org.sonarqube'
+apply plugin: 'maven-publish'
+
+
+/*jar {
+    baseName = apiName
+    processResources {
+        filesMatching('**//*application.yml') {
+            filter(ReplaceTokens, tokens: ['build.date': buildDate.toString(), 'build.number': buildLabel.toString()])
+        }
+    }
+}*/
 
 sonarqube {
     properties {
@@ -89,9 +105,15 @@ jacocoTestReport {
 }
 
 checkstyle {
+//    toolVersion = '7.5.1'
+//    sourceSets = [project.sourceSets.main] // don't worry about test classes
     configProperties.projectDir = project.projectDir
     checkstyleMain.configFile = new File(project.projectDir, '/config/checkstyle/checkstyle-main.xml')
     checkstyleTest.configFile = new File(project.projectDir, '/config/checkstyle/checkstyle-test.xml')
+}
+
+bootRun {
+    systemProperties System.properties
 }
 
 dependencies {
@@ -140,6 +162,27 @@ idea {
         testSourceDirs += sourceSets.integrationTest.java.srcDirs
     }
 }
+/*applicationDefaultJvmArgs = [
+        '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=6789'
+]*/
+
+publishing {
+    repositories {
+        maven {
+            credentials {
+                username 'username'
+                password 'password'
+            }
+            url "http://localhost.nexus/content/repositories/${project.version.endsWith('-SNAPSHOT') ? '.snapshot' : ''}"
+        }
+    }
+    publications {
+        mavenJava(MavenPublication){
+            artifactId apiName
+            from components.java
+        }
+    }
+}
 
 task unitTest(dependsOn: test)
 
@@ -148,3 +191,9 @@ task integrationTest(type: Test) {
     classpath = sourceSets.integrationTest.runtimeClasspath
 }
 build.dependsOn integrationTest
+
+
+task wrapper(type: Wrapper){
+    gradleVersion = '3.5'
+    distributionUrl = 'https\\://services.gradle.org/distributions/gradle-3.3-all.zip'
+}

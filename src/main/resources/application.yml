@@ -10,8 +10,13 @@ host:
 server:
   port: 8081
   comtextPath: /
+  tomcat:
+    access-log-enabled: true
+    access-log-pattern: %a %{X-Forwarded-For}i %l %u %t &quot;%r&quot; %s %b
 
 spring:
+  applicaiton:
+    name: rascal-api
   jpa:
     hibernate:
       ddl-auto: create-drop
