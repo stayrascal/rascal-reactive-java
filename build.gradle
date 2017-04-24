@@ -132,6 +132,7 @@ dependencies {
     compile("org.jadira.usertype:usertype.extended:5.0.0.GA")
     compile("com.google.guava:guava:21.0")
     compile("joda-time:joda-time:2.9.7")
+    compile("org.apache.commons:commons-lang3:3.5")
     compile("by.stub:stubby4j:3.3.0")
     compile("com.github.dreamhead:moco-core:0.11.0")
     runtime('com.h2database:h2')

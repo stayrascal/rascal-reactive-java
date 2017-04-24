@@ -41,6 +41,7 @@ public class FilterRoleGrantedAuthoritiesMapper implements GrantedAuthoritiesMap
                 .collect(Collectors.toList());*/
         List<GrantedAuthority> mapped = new ArrayList<>();
         for (GrantedAuthority authority : authorities) {
+            System.out.println("\n\n\n===========" + authority.getAuthority() + "==========\n\n");
             String key = authority.getAuthority();
             LOGGER.debug("Authority key: {}", key);
             if (roles.containsKey(key)) {

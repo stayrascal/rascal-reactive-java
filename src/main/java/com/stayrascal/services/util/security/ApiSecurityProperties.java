@@ -96,7 +96,7 @@ public class ApiSecurityProperties {
 
     public static class CredibleHeader {
         private String principal = "SSO_REMOTE_USER";
-        private String groupKey = "HTTPS_groups";
+        private String groupKey = "HTTPS_GROUPS";
         private String groupSeparator = ":";
 
         public String getPrincipal() {
