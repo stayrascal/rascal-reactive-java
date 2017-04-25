@@ -1,7 +1,9 @@
 api:
   security:
     paths: /github/**
-    roles: [ "API_USER", "API_SERVICE" ]
+    roles:
+      - API_USER
+      - API_SERVICE
     realm: "Stay Rascal API"
     users:
 #      apiuser: "$2a$10$PyhfP97kw2fLqoa6YIQ9Uue4G3f8Er950mldVJjzdMtuD9Qav6hDa,ROLE_API_USER,enabled"
@@ -12,6 +14,14 @@ api:
     users: https://api.github.com/users/%s
     followers: https://api.github.com/users/%s/followers
     repos: https://api.github.com/users/%s/repos
+  filter:
+    patterns:
+      - /v1/*
+      - /v2/*
+  logging:
+    messages:
+      level:
+        com.stayrascal.services.rest.GithubResource: DEBUG
 
 host:
   name: localhost

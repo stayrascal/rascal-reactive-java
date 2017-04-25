@@ -1,5 +1,6 @@
 package com.stayrascal.services.util.security;
 
+import com.stayrascal.services.util.autoconfig.ApiSecurityProperties;
 import com.stayrascal.services.util.security.filter.CredibleHeaderSecurityFilter;
 import com.stayrascal.services.util.security.mapper.ApplicationCentricAuthoritiesMapper;
 import com.stayrascal.services.util.security.mapper.DefaultApplicationCentricAuthoritiesMapper;

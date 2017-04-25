@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class CorsUtils {
-    static void wrapCorsHeaders(HttpServletRequest request, HttpServletResponse response) {
+    public static void wrapCorsHeaders(HttpServletRequest request, HttpServletResponse response) {
         String origin = getOrigin(request);
         response.setHeader("Access-Control-Allow-Origin", origin);
         response.setHeader("Access-Control-Allow-Methods", "GET, PUT, DELETE, OPTIONS, POST");
