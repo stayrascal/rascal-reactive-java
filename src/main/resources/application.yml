@@ -1,10 +1,11 @@
 api:
   security:
     paths: /github/**
-    roles: API_USER, API_SERVICE
+    roles: [ "API_USER", "API_SERVICE" ]
     realm: "Stay Rascal API"
     users:
-      apiuser: $2a$10$PyhfP97kw2fLqoa6YIQ9Uue4G3f8Er950mldVJjzdMtuD9Qav6hDa,ROLE_API_USER,enabled
+#      apiuser: "$2a$10$PyhfP97kw2fLqoa6YIQ9Uue4G3f8Er950mldVJjzdMtuD9Qav6hDa,ROLE_API_USER,enabled"
+      apiuser: "$2a$06$uf/RTBDxiZRaFvTVHODltu1ovj4Oap9nFMKIVOgsYyUpid7muGx.W,ROLE_API_USER,enabled"
     role-mapping:
       EXTRNAL_AD_ROLE: ROLE_API_USER
   github:
@@ -20,11 +21,24 @@ server:
   comtextPath: /
   tomcat:
     access-log-enabled: true
-#    access-log-pattern: %a %{X-Forwarded-For}i %l %u %t &quot;%r&quot; %s %b
+    access-log-pattern: "%a %{X-Forwarded-For}i %l %u %t &quot;%r&quot; %s %b"
 
 spring:
-  applicaiton:
+  application:
     name: rascal-api
   jpa:
     hibernate:
       ddl-auto: create-drop
+
+logging:
+  path: build/logs
+  file: ${logging.path}/applicaiton.log
+  pattern:
+#    console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5level) %clr(${PID:-}){magenta} %clr(---){faint} %clr([%15.15t]){faint} [%X{UserId}][%X{Correlation-ID}] %clr(%logger{36}(cyan)) %clr(:){faint} %m%n%wEx"
+#    file: "%d{HH:mm:ss.SSS} [%thread%] %-5level [%X{UserId}][%X{Correlation-ID}] %logger{36} - %msg%n%wEx"
+  level:
+    root: INFO
+    com:
+      stayrascal:
+        services:
+          rest: INFO
