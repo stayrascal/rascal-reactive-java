@@ -1,0 +1,41 @@
+{
+  "properties": [
+    {
+      "name": "api.logging.trace.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable @Log annotation processing in your controllers."
+    },
+    {
+      "name": "hystrix.stats.window.size",
+      "type": "java.lang.String",
+      "deprecation": {
+        "replacement": "api.hystrix.defaults.metrics.rollingStats.timeInMilliseconds"
+      }
+    }
+  ],
+  "hints": [
+    {
+      "name": "api.hystrix.default.keys",
+      "values": [
+        {
+          "value": "execution.isolation.strategy"
+        },
+        {
+          "value": "execution.isolation.thread.timeoutInMilliseconds"
+        },
+        {
+          "value": "execution.timeout.enabled"
+        },
+        {
+          "value": "execution.isolation.thread.interruptOnTimeout"
+        },
+        {
+          "value": "execution.isolation.thread.interruptOnCancel"
+        },
+        {
+          "value": "execution.isolation.semaphore.maxConcurrentRequests"
+        }
+      ]
+    }
+  ]
+}

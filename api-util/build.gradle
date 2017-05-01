@@ -1,0 +1,207 @@
+ext {
+    projectName = rootProject.name
+    projectVersion = project.version
+    buildNumber = System.getenv("BUILD_NUMBER") ?: "lcoal"
+    jobName = System.getenv("JOB_NAME") ?: name
+    buildUrl = System.getenv("BUILD_URL") ?: "http://local-build"
+    revision = System.getenv("GIT_COMMIT") ?: "local"
+    timestamp = new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+    buildDir = relativePath("./build")
+    buildLabel = System.getenv("CI_LABEL") ?: ("${System.getenv('USERNAME') ?: 'UNKNOWM'}-SNAPSHOT".toString())
+    buildDate = new Date().format('dd-MM-yyyy HH:mm')
+    buildVersion = System.getenv("VERSION") ?: buildLabel
+    simianThreshold = '9'
+    apiName = 'rascal-api'
+}
+
+project.group = 'com.stayrascal.aws'
+project.version = buildVersion
+
+buildscript {
+    ext {
+        springbootVersion = '1.5.2.RELEASE'
+        /*springbootVersion = '2.0.0.BUILD-SNAPSHOT'*/
+    }
+    repositories {
+        jcenter()
+        mavenLocal()
+        maven { url 'http://repo.spring.io/snapshot' }
+        maven { url 'http://repo.spring.io/milestone' }
+        maven { url 'https://plugins.gradle.org/m2/' }
+//        maven { url 'http://localhost.nexus/'}
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springbootVersion}"
+        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.3'
+        classpath 'org.flywaydb:flyway-gradle-plugin:4.1.2'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'jacoco'
+apply plugin: 'checkstyle'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'org.sonarqube'
+apply plugin: 'maven-publish'
+apply plugin: 'org.flywaydb.flyway'
+
+
+/*jar {
+    baseName = apiName
+    processResources {
+        filesMatching('**//*application.yml') {
+            filter(ReplaceTokens, tokens: ['build.date': buildDate.toString(), 'build.number': buildLabel.toString()])
+        }
+    }
+}*/
+
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'https:sonar.com'
+        property 'sonar.jacoco.reportPaths', "${buildDir}/jacoco/test.exec, ${buildDir}/jacoco/integrationTest.exec"
+        properties 'sonar.login', 'token'
+    }
+}
+
+repositories {
+    jcenter()
+    maven { url "http://repo.spring.io/snapshot" }
+    maven { url "http://repo.spring.io/milestone" }
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src/main/java']
+        resources.srcDirs = ['src/main/resources']
+    }
+    test {
+        java.srcDirs = ['src/test/unit/java']
+        resources.srcDirs = ['src/test/unit/resources']
+    }
+    integrationTest {
+        java.srcDirs = ['src/test/intg/java']
+        resources.srcDirs = ['src/test/intg/resources']
+        /*resources.srcDirs = ['src/test/intg/resources', 'config/application/environment/local']
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output*/
+    }
+}
+
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+    reportsDir = file("$buildDir/reports/jacoco")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    include: ['com.stayrascal.services.domain.model.github/*'])
+        })
+    }
+}
+
+checkstyle {
+//    toolVersion = '7.5.1'
+//    sourceSets = [project.sourceSets.main] // don't worry about test classes
+    configProperties.projectDir = project.projectDir
+    checkstyleMain.configFile = new File(project.projectDir, '/config/checkstyle/checkstyle-main.xml')
+    checkstyleTest.configFile = new File(project.projectDir, '/config/checkstyle/checkstyle-test.xml')
+}
+
+bootRun {
+    systemProperties System.properties
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-aop")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-actuator")
+    compile("org.springframework.boot:spring-boot-configuration-processor")
+    compile("org.springframework.ldap:spring-ldap-core")
+    compile("org.springframework.security:spring-security-ldap")
+    compile("org.springframework.cloud:spring-cloud-starter-hystrix")
+    /*compile("org.springframework.hateoas:spring-hateos")*/
+    compile("io.reactivex:rxjava:1.2.5")
+//    compile("commons-logging:commons-logging:1.2")
+    compile("org.jadira.usertype:usertype.extended:5.0.0.GA")
+    compile("com.google.guava:guava:21.0")
+    compile("joda-time:joda-time:2.9.7")
+    compile("org.apache.commons:commons-lang3:3.5")
+    compile("io.springfox:springfox-swagger-ui:2.6.1")
+    compile("io.springfox:springfox-swagger2:2.6.1")
+    compile("by.stub:stubby4j:3.3.0")
+    compile("com.github.dreamhead:moco-core:0.11.0")
+//    compile("org.flywaydb:flyway-gradle-plugin:4.1.2")
+    runtime('com.h2database:h2')
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.security:spring-security-test")
+    integrationTestCompile sourceSets.main.output
+    integrationTestCompile sourceSets.test.output
+    integrationTestCompile configurations.testCompile
+    integrationTestRuntime configurations.testRuntime
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Camden.SR5'
+    }
+}
+
+idea {
+    project {
+        ipr {
+            withXml { XmlProvider xml ->
+                xml.node.with {
+                    component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
+                }
+            }
+        }
+    }
+
+    module {
+        testSourceDirs += sourceSets.integrationTest.java.srcDirs
+    }
+}
+/*applicationDefaultJvmArgs = [
+        '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=6789'
+]*/
+
+publishing {
+    repositories {
+        maven {
+            credentials {
+                username 'username'
+                password 'password'
+            }
+            url "http://localhost.nexus/content/repositories/${project.version.endsWith('-SNAPSHOT') ? '.snapshot' : ''}"
+        }
+    }
+    publications {
+        mavenJava(MavenPublication){
+            artifactId apiName
+            from components.java
+        }
+    }
+}
+
+task unitTest(dependsOn: test)
+
+task integrationTest(type: Test) {
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+}
+build.dependsOn integrationTest
+
+
+task wrapper(type: Wrapper){
+    gradleVersion = '3.5'
+    distributionUrl = 'https\\://services.gradle.org/distributions/gradle-3.3-all.zip'
+}

@@ -1,0 +1,72 @@
+api:
+  security:
+    paths: /github/**
+    roles:
+      - API_USER
+      - API_SERVICE
+    realm: "Stay Rascal API"
+    users:
+#      apiuser: "$2a$10$PyhfP97kw2fLqoa6YIQ9Uue4G3f8Er950mldVJjzdMtuD9Qav6hDa,ROLE_API_USER,enabled"
+      - apiuser: "$2a$06$uf/RTBDxiZRaFvTVHODltu1ovj4Oap9nFMKIVOgsYyUpid7muGx.W,ROLE_API_USER,enabled"
+      - apiadmin: "$2a$10$9UmdgR6P5IE69.irPZ/sp.V7joWC8DQQ/55IoNx6XZRVu1/ipnSXC,ROLE_API_USER,enabled"
+    role-mapping:
+      EXTRNAL_AD_ROLE: ROLE_API_USER
+  github:
+    users: https://api.github.com/users/%s
+    followers: https://api.github.com/users/%s/followers
+    repos: https://api.github.com/users/%s/repos
+  filter:
+    patterns:
+      - /v1/*
+      - /v2/*
+      - /github/*
+  logging:
+    messages:
+      level:
+        com.stayrascal.services.rest.GithubResource: DEBUG
+
+host:
+  name: localhost
+
+server:
+  port: 8081
+  comtextPath: /
+  tomcat:
+    access-log-enabled: true
+    access-log-pattern: "%a %{X-Forwarded-For}i %l %u %t &quot;%r&quot; %s %b"
+
+spring:
+  application:
+    name: rascal-api
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+logging:
+  path: build/logs
+  file: ${logging.path}/applicaiton.log
+  pattern:
+#    console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5level) %clr(${PID:-}){magenta} %clr(---){faint} %clr([%15.15t]){faint} [%X{UserId}][%X{Correlation-ID}] %clr(%logger{36}(cyan)) %clr(:){faint} %m%n%wEx"
+#    file: "%d{HH:mm:ss.SSS} [%thread%] %-5level [%X{UserId}][%X{Correlation-ID}] %logger{36} - %msg%n%wEx"
+  level:
+    root: INFO
+    com:
+      stayrascal:
+        services:
+          rest: INFO
+info:
+  app:
+    name: rascal-api
+    base:
+      url: http://
+  version: 1.0.0
+  contact:
+    email: stayrascal@gmail.com
+swagger:
+  app:
+    description: This is Rascal API
+
+flyway:
+  url:
+  user:
+  password:
