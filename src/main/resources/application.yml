@@ -18,6 +18,7 @@ api:
     patterns:
       - /v1/*
       - /v2/*
+      - /github/*
   logging:
     messages:
       level:
@@ -52,3 +53,19 @@ logging:
       stayrascal:
         services:
           rest: INFO
+info:
+  app:
+    name: rascal-api
+    base:
+      url: http://
+  version: 1.0.0
+  contact:
+    email: stayrascal@gmail.com
+swagger:
+  app:
+    description: This is Rascal API
+
+flyway:
+  url:
+  user:
+  password:
