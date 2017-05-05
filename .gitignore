@@ -6,4 +6,4 @@ build/
 *.iml
 *.ipr
 *.iws
-/api-util/
+api-util/
