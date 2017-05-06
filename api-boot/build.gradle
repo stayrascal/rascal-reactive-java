@@ -93,8 +93,8 @@ checkstyle {
 //    toolVersion = '7.5.1'
 //    sourceSets = [project.sourceSets.main] // don't worry about test classes
     configProperties.projectDir = project.projectDir
-    checkstyleMain.configFile = new File(project.projectDir, '/config/checkstyle/checkstyle-main.xml')
-    checkstyleTest.configFile = new File(project.projectDir, '/config/checkstyle/checkstyle-test.xml')
+    checkstyleMain.configFile = new File(project.projectDir, './config/checkstyle/checkstyle-main.xml')
+    checkstyleTest.configFile = new File(project.projectDir, './config/checkstyle/checkstyle-test.xml')
 }
 
 sonarqube {
