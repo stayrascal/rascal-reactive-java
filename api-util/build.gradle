@@ -1,26 +1,15 @@
 ext {
-    projectName = rootProject.name
-    projectVersion = project.version
-    buildNumber = System.getenv("BUILD_NUMBER") ?: "lcoal"
-    jobName = System.getenv("JOB_NAME") ?: name
-    buildUrl = System.getenv("BUILD_URL") ?: "http://local-build"
-    revision = System.getenv("GIT_COMMIT") ?: "local"
-    timestamp = new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-    buildDir = relativePath("./build")
     buildLabel = System.getenv("CI_LABEL") ?: ("${System.getenv('USERNAME') ?: 'UNKNOWM'}-SNAPSHOT".toString())
     buildDate = new Date().format('dd-MM-yyyy HH:mm')
-    buildVersion = System.getenv("VERSION") ?: buildLabel
-    simianThreshold = '9'
-    apiName = 'rascal-api'
+    apiName = 'api-util'
 }
 
-project.group = 'com.stayrascal.aws'
+project.group = 'com.stayrascal.api'
 project.version = buildVersion
 
 buildscript {
     ext {
         springbootVersion = '1.5.2.RELEASE'
-        /*springbootVersion = '2.0.0.BUILD-SNAPSHOT'*/
     }
     repositories {
         jcenter()
@@ -32,43 +21,15 @@ buildscript {
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springbootVersion}"
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.3'
-        classpath 'org.flywaydb:flyway-gradle-plugin:4.1.2'
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'jacoco'
-apply plugin: 'checkstyle'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'org.sonarqube'
 apply plugin: 'maven-publish'
-apply plugin: 'org.flywaydb.flyway'
-
-
-/*jar {
-    baseName = apiName
-    processResources {
-        filesMatching('**//*application.yml') {
-            filter(ReplaceTokens, tokens: ['build.date': buildDate.toString(), 'build.number': buildLabel.toString()])
-        }
-    }
-}*/
-
-sonarqube {
-    properties {
-        property 'sonar.host.url', 'https:sonar.com'
-        property 'sonar.jacoco.reportPaths', "${buildDir}/jacoco/test.exec, ${buildDir}/jacoco/integrationTest.exec"
-        properties 'sonar.login', 'token'
-    }
-}
-
-repositories {
-    jcenter()
-    maven { url "http://repo.spring.io/snapshot" }
-    maven { url "http://repo.spring.io/milestone" }
-}
+apply plugin: 'project-structure'
+apply plugin: 'findbugs'
+apply plugin: 'checkstyle'
+apply plugin: 'jacoco'
 
 sourceSets {
     main {
@@ -88,61 +49,99 @@ sourceSets {
     }
 }
 
-jacoco {
-    toolVersion = "0.7.6.201602180812"
-    reportsDir = file("$buildDir/reports/jacoco")
+task unitTest(dependsOn: test)
+
+task integrationTest(type: Test) {
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+}
+build.dependsOn integrationTest
+
+configurations {
+    provided
+    provided.extendsFrom(ideaProvided)
+}
+
+idea {
+    project {
+        jdkName = '1.8'
+        languageLevel = '1.8'
+    }
+    module {
+        scopes.PROVIDED.plus += [configurations.provided]
+    }
+}
+
+afterEvaluate {
+    idea {
+        module {
+            testSourceDirs = testSourceDirs + sourceSets.integrationTest.allSource.srcDirs.flatten() as LinkedHashSet
+            outputDir = new File("${buildDir}/classes/idea/main")
+            testOutputDir = new File("${buildDir}/classes/idea/test")
+        }
+    }
 }
 
 jacocoTestReport {
     reports {
-        xml.enabled true
-        html.enabled true
-    }
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it,
-                    include: ['com.stayrascal.services.domain.model.github/*'])
-        })
+        xml.enabled false
+        csv.enabled false
     }
 }
 
-checkstyle {
-//    toolVersion = '7.5.1'
-//    sourceSets = [project.sourceSets.main] // don't worry about test classes
-    configProperties.projectDir = project.projectDir
-    checkstyleMain.configFile = new File(project.projectDir, '/config/checkstyle/checkstyle-main.xml')
-    checkstyleTest.configFile = new File(project.projectDir, '/config/checkstyle/checkstyle-test.xml')
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        csv.enabled false
+    }
 }
 
-bootRun {
-    systemProperties System.properties
+/*jar {
+    baseName = apiName
+    processResources {
+        filesMatching('**//*application.yml') {
+            filter(ReplaceTokens, tokens: ['build.date': buildDate.toString(), 'build.number': buildLabel.toString()])
+        }
+    }
+}*/
+
+idea.module {
+    testSourceDirs += sourceSets.integrationTest.java.srcDirs
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-security")
-    compile("org.springframework.boot:spring-boot-starter-aop")
-    compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile("org.springframework.boot:spring-boot-actuator")
-    compile("org.springframework.boot:spring-boot-configuration-processor")
-    compile("org.springframework.ldap:spring-ldap-core")
-    compile("org.springframework.security:spring-security-ldap")
-    compile("org.springframework.cloud:spring-cloud-starter-hystrix")
-    /*compile("org.springframework.hateoas:spring-hateos")*/
+    compile 'org.springframework.boot:spring-boot-starter-web',
+            'org.springframework.boot:spring-boot-starter-security',
+            'org.springframework.boot:spring-boot-actuator',
+            'org.springframework.boot:spring-boot-starter-tomcat',
+            'org.springframework.boot:spring-boot-starter-aop',
+            'org.springframework.security:spring-security-ldap',
+            'com.google.code.findbugs:jsr305:3.0.2'
+
+    compile("io.springfox:springfox-swagger2:2.6.1"){
+        exclude group: 'org.springframework'
+    }
+
+    compile 'joda-time:joda-time:2.9.7', optional
+    compile 'org.springframework.cloud:spring-cloud-starter-hystrix', optional
+    compile 'org.springframework.boot:spring-boot-configuration-processor', optional
+    compile 'org.springframework.hateoas:spring-hateos', optional
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test',
+                'org.springframework.security:spring-security-test'
+
+    /*compile("org.springframework.ldap:spring-ldap-core")
+//    compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("io.reactivex:rxjava:1.2.5")
 //    compile("commons-logging:commons-logging:1.2")
     compile("org.jadira.usertype:usertype.extended:5.0.0.GA")
     compile("com.google.guava:guava:21.0")
-    compile("joda-time:joda-time:2.9.7")
     compile("org.apache.commons:commons-lang3:3.5")
     compile("io.springfox:springfox-swagger-ui:2.6.1")
-    compile("io.springfox:springfox-swagger2:2.6.1")
     compile("by.stub:stubby4j:3.3.0")
     compile("com.github.dreamhead:moco-core:0.11.0")
 //    compile("org.flywaydb:flyway-gradle-plugin:4.1.2")
-    runtime('com.h2database:h2')
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile("org.springframework.security:spring-security-test")
+    runtime('com.h2database:h2')*/
     integrationTestCompile sourceSets.main.output
     integrationTestCompile sourceSets.test.output
     integrationTestCompile configurations.testCompile
@@ -155,29 +154,15 @@ dependencyManagement {
     }
 }
 
-idea {
-    project {
-        ipr {
-            withXml { XmlProvider xml ->
-                xml.node.with {
-                    component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
-                }
-            }
-        }
-    }
-
-    module {
-        testSourceDirs += sourceSets.integrationTest.java.srcDirs
-    }
-}
 /*applicationDefaultJvmArgs = [
         '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=6789'
 ]*/
 
+/*
 publishing {
     repositories {
         maven {
-            credentials {
+            org.gradle.api.credentials.Credentials {
                 username 'username'
                 password 'password'
             }
@@ -191,17 +176,5 @@ publishing {
         }
     }
 }
+*/
 
-task unitTest(dependsOn: test)
-
-task integrationTest(type: Test) {
-    testClassesDir = sourceSets.integrationTest.output.classesDir
-    classpath = sourceSets.integrationTest.runtimeClasspath
-}
-build.dependsOn integrationTest
-
-
-task wrapper(type: Wrapper){
-    gradleVersion = '3.5'
-    distributionUrl = 'https\\://services.gradle.org/distributions/gradle-3.3-all.zip'
-}
