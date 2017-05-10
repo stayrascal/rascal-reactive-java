@@ -20,7 +20,7 @@ project.version = buildVersion
 
 buildscript {
     ext {
-        springbootVersion = '1.5.2.RELEASE'
+        springbootVersion = '1.5.3.RELEASE'
     }
     repositories {
         jcenter()
