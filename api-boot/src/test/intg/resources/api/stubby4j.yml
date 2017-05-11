@@ -5,5 +5,4 @@
     status: 200
     headers:
       content-type: application/json
-    body: >
-      { "rawUser" : { "login" : "stayrascal" } }
+    body: /api/json/github-response.json
