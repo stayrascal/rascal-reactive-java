@@ -5,4 +5,4 @@
     status: 200
     headers:
       content-type: application/json
-    body: /api/json/github-response.json
+    file: /api/json/github-response.json
