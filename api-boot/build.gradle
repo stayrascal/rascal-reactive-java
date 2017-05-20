@@ -1,5 +1,4 @@
 ext {
-    /*springbootVersion = '2.0.0.BUILD-SNAPSHOT'*/
     projectName = rootProject.name
     projectVersion = project.version
     buildNumber = System.getenv("BUILD_NUMBER") ?: "lcoal"
