@@ -28,7 +28,7 @@ buildscript {
         maven { url 'http://repo.spring.io/snapshot' }
         maven { url 'http://repo.spring.io/milestone' }
         maven { url 'https://plugins.gradle.org/m2/' }
-//        maven { url 'http://localhost.nexus/'}
+        maven { url 'http://localhost.nexus/'}
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springbootVersion}"
