@@ -161,7 +161,7 @@ dependencyManagement {
         '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=6789'
 ]*/
 
-/*publishing {
+publishing {
     repositories {
         maven {
             org.gradle.api.credentials.Credentials {
@@ -177,7 +177,7 @@ dependencyManagement {
             from components.java
         }
     }
-}*/
+}
 
 idea.module {
     testSourceDirs += sourceSets.integrationTest.java.srcDirs
