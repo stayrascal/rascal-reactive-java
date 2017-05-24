@@ -106,14 +106,14 @@ sonarqube {
 }
 
 
-/*jar {
+jar {
     baseName = apiName
     processResources {
-        filesMatching('**//*application.yml') {
+        filesMatching('*application.yml') {
             filter(ReplaceTokens, tokens: ['build.date': buildDate.toString(), 'build.number': buildLabel.toString()])
         }
     }
-}*/
+}
 
 bootRun {
     systemProperties System.properties
