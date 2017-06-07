@@ -33,6 +33,7 @@ buildscript {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springbootVersion}"
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.3'
         classpath 'org.flywaydb:flyway-gradle-plugin:4.1.2'
+//        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-M2'
     }
 }
 
@@ -42,6 +43,7 @@ apply plugin: 'org.flywaydb.flyway'
 apply plugin: 'jacoco'
 apply plugin: 'checkstyle'
 apply plugin: 'org.sonarqube'
+//apply plugin: 'org.junit.platform.gradle.plugin'
 
 sourceSets {
     main {
@@ -145,6 +147,9 @@ dependencies {
     runtime('com.h2database:h2')
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.security:spring-security-test")
+//    testCompile("org.junit.jupiter:junit-jupiter-params:5.0.0-M4")
+//    testCompile("org.junit.jupiter:junit-jupiter-api:5.0.0-M4")
+//    testCompile("org.junit.platform:junit-platform-launcher:1.0.0-M4")
     integrationTestCompile sourceSets.main.output
     integrationTestCompile sourceSets.test.output
     integrationTestCompile configurations.testCompile
